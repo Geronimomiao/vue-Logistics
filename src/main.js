@@ -12,7 +12,7 @@ import NavFooter from './components/NavFooter'
 
 Vue.config.productionTip = false
 Vue.use(iView);
-Vue.use(VueAxios,axios);
+Vue.use(VueAxios, axios);
 Vue.component('nav-header', NavHeader)
 Vue.component('nav-footer', NavFooter)
 

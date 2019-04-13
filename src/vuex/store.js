@@ -6,11 +6,11 @@ Vue.use(Vuex)
 export default () => {
   return new Vuex.Store({
     state: {
-      user: {}
+      username: ''
     },
     mutations: {
-      updateUserInfo(state, user) {
-        state.user = user
+      updateUserInfo(state, username) {
+        state.username = username
       },
     }
   })

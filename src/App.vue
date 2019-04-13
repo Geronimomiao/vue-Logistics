@@ -10,6 +10,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 
+  #app
+    height: 100vh
+  .ivu-notice
+    width: 80%
+    left 10%
+    margin-right: 0
 </style>

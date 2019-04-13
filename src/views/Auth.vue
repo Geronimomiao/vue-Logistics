@@ -7,13 +7,13 @@
           <Icon type="ios-film-outline"></Icon>
           登录页面
         </p>
-        <a href="#" slot="extra" @click.prevent="changeLimit">
+        <a href="#" slot="extra" @click="login">
           <Icon type="ios-loop-strong"></Icon>
           Login
         </a>
         <Form>
           <FormItem prop="user">
-            <Input type="text" v-model="user" placeholder="Username">
+            <Input type="text" v-model="username" placeholder="Username">
               <Icon type="ios-person-outline" slot="prepend"></Icon>
             </Input>
           </FormItem>
@@ -34,10 +34,32 @@
     name: "Auth",
     data() {
       return {
-        user: '',
+        username: '',
         password: '',
       }
     },
+    methods: {
+      login() {
+        let params = {
+          username: this.username,
+          password: this.password
+        }
+        this.axios.post('http://127.0.0.1:3100/user/login', params).then(res => {
+          let data = res.data;
+          if (data.status) {
+
+          } else {
+            this.error()
+          }
+        })
+      },
+      error () {
+        this.$Notice.error({
+          title: 'Notification title',
+          desc: '请检查输入的用户名 密码',
+        });
+      }
+    }
   }
 </script>
 

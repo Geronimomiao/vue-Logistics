@@ -1,24 +1,22 @@
 <template>
   <div id="show-data">
     <nav-header></nav-header>
-    <div class="msg">
-      <form>
-        <input type="file" name="file" multiple="multiple" @change="getFile($event)"/>
-        <button @click="submitForm($event)">提交</button>
-      </form>
-      <template>
-        <Upload action="http://127.0.0.1:3100/upload">
-          <Button icon="ios-cloud-upload-outline">Upload files</Button>
-        </Upload>
-      </template>
+    <div class="content">
 
+      <Upload action="http://127.0.0.1:3100/upload"
+              :show-upload-list="false"
+              :on-success="handleSuccess">
+        <Button icon="ios-cloud-upload-outline">Upload files</Button>
+
+      </Upload>
+      <Button type="error" ghost class="del" @click="del">清空所有数据</Button>
     </div>
     <nav-footer></nav-footer>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
+
   export default {
     name: 'ShowData',
     data() {
@@ -27,25 +25,14 @@
       }
     },
     methods: {
-      getFile(event) {
-        this.file = event.target.files[0];
-        console.log(this.file);
-      },
-      submitForm(event) {
-        event.preventDefault();
-        let formData = new FormData();
-        formData.append('name', this.name);
-        formData.append('age', this.age);
-        formData.append('file', this.file);
-        let config = {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          }
-        }
-        axios.post('http://127.0.0.1:3100/upload', formData, config).then(res => {
+      del() {
+        this.axios.post('http://127.0.0.1:3100/show/del').then(res => {
           console.log(res)
         })
-      }
+      },
+      handleSuccess (res, file) {
+        console.log(res)
+      },
     }
   }
 </script>
@@ -53,7 +40,19 @@
 <style lang="stylus">
   #show-data
     height: 100vh
-    .msg
+
+    .content
+      margin-top: 5vh
       height: 60vh
-      margin-bottom: 20vh
+      margin-bottom: 15vh
+      position: relative
+      width: 90%
+      margin-left: 5%
+      .del
+        position: absolute
+        top: 0
+        right: 0
+
+
+
 </style>
