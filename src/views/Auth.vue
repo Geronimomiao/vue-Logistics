@@ -47,7 +47,8 @@
         this.axios.post('http://127.0.0.1:3100/user/login', params).then(res => {
           let data = res.data;
           if (data.status) {
-
+            this.$store.commit('updateUserInfo', this.username)
+            this.$router.push({path: '/show'})
           } else {
             this.error()
           }

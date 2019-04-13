@@ -2,17 +2,22 @@
   <div id="nav_header">
     <div class="container">
       <div class="item">首页</div>
-      <div class="item">我的信息</div>
+      <div class="item" v-if="username">你好，{{username}}</div>
+      <div class="item" v-else>请登录</div>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name: "NavHeader",
     data() {
       return {}
     },
+    computed: {
+      ...mapState(['username'])
+    }
   }
 </script>
 
