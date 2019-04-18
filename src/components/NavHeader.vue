@@ -1,7 +1,9 @@
 <template>
   <div id="nav_header">
     <div class="container">
-      <div class="item">首页</div>
+      <div class="item" @click="goback">
+        <Icon type="md-arrow-dropleft" />
+      </div>
       <div class="item" v-if="username">你好，{{username}}</div>
       <div class="item" v-else>请登录</div>
     </div>
@@ -17,6 +19,11 @@
     },
     computed: {
       ...mapState(['username'])
+    },
+    methods: {
+      goback() {
+        this.$router.go(-1)
+      }
     }
   }
 </script>
@@ -24,17 +31,20 @@
 <style lang="stylus">
 
   #nav_header
-    background-color: #000000
-    height: 10vh
+    background-color: #f0f0f0
+    height: 7vh
+
     .container
       width: 90%
-      margin-left: 5%
+      margin-left: 3%
       display: flex
       justify-content space-between
       .item
-        color aliceblue
-        line-height: 10vh
-        font-size: 3vh
+        color black
+        line-height: 7vh
+        font-size: 1rem
+        i
+          font-size: 1.5rem
 
 
 </style>

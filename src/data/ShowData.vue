@@ -1,16 +1,15 @@
 <template>
   <div id="show-data">
-    <nav-header></nav-header>
     <div class="content" ref="content">
       <div class="content-msg">
-        <div class="upload">
-          <Upload action="http://127.0.0.1:3100/upload"
-                  :show-upload-list="false"
-                  :on-success="handleSuccess">
-            <Button icon="ios-cloud-upload-outline">上传文件</Button>
-          </Upload>
-          <Button type="error" ghost class="del" @click="del">清空所有数据</Button>
-        </div>
+        <!--<div class="upload">-->
+          <!--<Upload action="/api/upload"-->
+                  <!--:show-upload-list="false"-->
+                  <!--:on-success="handleSuccess">-->
+            <!--<Button icon="ios-cloud-upload-outline">上传文件</Button>-->
+          <!--</Upload>-->
+          <!--<Button type="error" ghost class="del" @click="del">清空所有数据</Button>-->
+        <!--</div>-->
         <div class="select">
           <DatePicker type="date" placeholder="请选择日期" style="width: 70%" v-model="date"></DatePicker>
           <Button type="primary" ghost @click="timeData">查询</Button>
@@ -19,13 +18,20 @@
           <Input v-model="order_id" placeholder="请输入提单号" style="width: 70%"/>
           <Button type="primary" ghost @click="showData">查询</Button>
         </div>
+        <div class="all">
+          <Button type="success" ghost @click="showData">全部订单</Button>
+        </div>
         <div class="table">
-          <Table :columns="columns" :data="data"></Table>
+          <Table border :columns="columns" :data="data">
+
+            <template slot-scope="{ row }" slot="order_id">
+              <strong @click="goForDetail(row.order_id)">{{ row.order_id }}</strong>
+            </template>
+          </Table>
+
         </div>
       </div>
     </div>
-
-    <nav-footer></nav-footer>
   </div>
 </template>
 
@@ -37,22 +43,23 @@
     data() {
       return {
         order_id: '',
-        data: [{date: '', order_id: '', box_num: ''}],
+        data: [{date: '', order_id: '', status: ''}],
         date: '',
         columns: [
           {
             title: '日期',
-            key: 'date'
+            key: 'date',
+            width: 60
           },
           {
             title: '提单号',
-            key: 'order_id'
+            slot: 'order_id'
           },
           {
-            title: '箱号',
-            key: 'box_num'
+            title: '状态',
+            key: 'status',
+            width: 90
           },
-
         ],
       }
     },
@@ -67,7 +74,8 @@
             let year = pre_date[0]
             let mon = pre_date[1]
             let day = pre_date[2]
-            let date = `${year}-${mon}-${day}`
+            // let date = `${year}-${mon}-${day}`
+            let date = `${mon}-${day}`
             item.date = date
           })
         }
@@ -87,7 +95,7 @@
     },
     methods: {
       del() {
-        this.axios.post('http://127.0.0.1:3100/show/del').then(res => {
+        this.axios.post('/api/show/del').then(res => {
           console.log(res)
         })
       },
@@ -105,29 +113,50 @@
           let params = {
             order_id: this.order_id
           }
-          await this.axios.post('http://127.0.0.1:3100/show/dataDetail', params).then(res => {
+          await this.axios.post('/api/show/dataDetail', params).then(res => {
             let news_filter = this.$options.filters['dateFilter']
             this.data = news_filter([res.data.msg])
-            console.log(this.data)
           })
         } else {
-          await this.axios.post('http://127.0.0.1:3100/show/data').then(res => {
+          await this.axios.post('/api/show/data').then(res => {
             let news_filter = this.$options.filters['dateFilter']
             this.data = news_filter(res.data.msg)
+            console.log(this.data)
           })
         }
       },
       async timeData() {
-        await this.axios.post('http://127.0.0.1:3100/show/data').then(res => {
+        await this.axios.post('/api/show/data').then(res => {
           let news_filter = this.$options.filters['dateFilter']
           this.data = news_filter(res.data.msg)
 
           let time_filter = this.$options.filters['timeFilter']
           let d =  new Date(this.date)
-          let arg = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+          let arg = (d.getMonth() + 1) + '-' + d.getDate()
           this.data = time_filter(this.data, arg)
         })
-      }
+      },
+      show (index) {
+        this.$Modal.info({
+          title: '订单详情展示',
+          content: `
+            提单号：${this.data[index].order_id}<br>
+            船号/航次：${this.data[index].boat_name}<br>
+            状态：${this.data[index].status}<br>
+            目的港：${this.data[index].destination}<br>
+            集港日期：${this.data[index].port_time}<br>
+           `
+        })
+      },
+      goForDetail(order_id) {
+        console.log(order_id)
+        this.$router.push({
+          name: 'Detail',
+          params: {
+            order_id: order_id
+          }
+        })
+      },
     },
 
   }
@@ -135,16 +164,16 @@
 
 <style lang="stylus">
   #show-data
-    height: 100vh
 
     .content
       overflow hidden
-      margin-top: 5vh
-      height: 70vh
+      margin-top: 3vh
+      margin-bottom: 3vh
+      height: 77vh
       position: relative
       width: 90%
       margin-left: 5%
-      margin-bottom: 5vh
+
 
       .del
         position: absolute
@@ -156,7 +185,14 @@
         margin-top: 2vh
         justify-content space-between
 
+      .all
+        margin-top: 2vh
+        -ms-text-align-last: left
+        text-align-last: left
+
       .table
         margin-top: 2vh
-
+        .ivu-table-cell
+          padding-left: 10px
+          padding-right: 10px
 </style>
