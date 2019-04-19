@@ -2,14 +2,6 @@
   <div id="show-data">
     <div class="content" ref="content">
       <div class="content-msg">
-        <!--<div class="upload">-->
-          <!--<Upload action="/api/upload"-->
-                  <!--:show-upload-list="false"-->
-                  <!--:on-success="handleSuccess">-->
-            <!--<Button icon="ios-cloud-upload-outline">上传文件</Button>-->
-          <!--</Upload>-->
-          <!--<Button type="error" ghost class="del" @click="del">清空所有数据</Button>-->
-        <!--</div>-->
         <div class="select">
           <DatePicker type="date" placeholder="请选择日期" style="width: 70%" v-model="date"></DatePicker>
           <Button type="primary" ghost @click="timeData">查询</Button>

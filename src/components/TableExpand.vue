@@ -7,7 +7,7 @@
       </Col>
       <Col span="12">
         <span class="expand-key">提箱日期: </span>
-        <span class="expand-value">3.22</span>
+        <span class="expand-value">{{ row.suitcase_time | dateFilter  }}</span>
       </Col>
 
     </Row>

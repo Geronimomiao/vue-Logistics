@@ -17,6 +17,9 @@
   #nav_footer
     height: 10vh
     background-color: #f0f0f0
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     .msg
       width: 90%
       margin-left: 5%
