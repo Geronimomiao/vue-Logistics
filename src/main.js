@@ -10,7 +10,7 @@ import App from './App'
 import createStore from './vuex/store'
 import NavHeader from './components/NavHeader'
 import NavFooter from './components/NavFooter'
-import DriverHeader from './components/DriverHeader'
+import DriverHeader from '../apps/driver/components/DriverHeader'
 
 Vue.config.productionTip = false
 Vue.use(iView);

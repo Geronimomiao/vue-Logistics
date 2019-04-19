@@ -1,8 +1,6 @@
 <template>
   <div id="b_map">
-    <nav-header></nav-header>
-      <baidu-map class="bm-view" :center="center" :zoom="zoom"></baidu-map>
-    <nav-footer></nav-footer>
+    <baidu-map class="bm-view" :center="center" :zoom="zoom"></baidu-map>
   </div>
 </template>
 

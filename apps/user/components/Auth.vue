@@ -1,6 +1,5 @@
 <template>
   <div id="auth">
-    <nav-header></nav-header>
     <div class="content">
       <Card style="width:80%">
         <p slot="title">
@@ -25,7 +24,6 @@
         </Form>
       </Card>
     </div>
-    <nav-footer></nav-footer>
   </div>
 </template>
 

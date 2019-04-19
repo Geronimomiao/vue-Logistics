@@ -1,31 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Auth from '@/views/Auth'
-import Data from '@/views/Data'
-import Admin from '@/views/Admin'
-import Bmap from '@/views/Bmap'
-import BmapClient from '@/views/BmapClient'
+import BmapClient from '../../apps/driver/components/BmapClient'
 
-import Detail from '@/data/Detail'
-import ShowData from '@/data/ShowData'
+import Data from '../../apps/user/views/Data'
+import Detail from '../../apps/user/components/Detail'
+import ShowData from '../../apps/user/components/ShowData'
+import Bmap from '../../apps/user/components/Bmap'
+import Auth from '../../apps/user/components/Auth'
 
-import Index from '@/admin/index'
+import Admin from '../../apps/admin/views/Admin'
+import Index from '../../apps/admin/components/index'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/auth',
-      name: 'Auth',
-      component: Auth
-    },
-    {
       path: '/data',
       name: 'Data',
       component: Data,
       children: [
+        {
+          path: '/data/auth',
+          name: 'Auth',
+          component: Auth
+        },
         {
           path: '/data/show',
           name: 'ShowData',
@@ -38,6 +38,11 @@ export default new Router({
           name: 'Detail',
           component: Detail,
           meta: {keepAlive: false},
+        },
+        {
+          path: '/data/map',
+          name: 'Bmap',
+          component: Bmap
         },
       ]
     },
@@ -53,11 +58,7 @@ export default new Router({
         },
       ]
     },
-    {
-      path: '/map',
-      name: 'Bmap',
-      component: Bmap
-    },
+
     {
       path: '/map_client',
       name: 'BmapClient',

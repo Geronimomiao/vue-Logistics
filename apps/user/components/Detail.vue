@@ -43,7 +43,7 @@
 
 <script>
   import BScroll from 'better-scroll'
-  import expandRow from '../components/TableExpand'
+  import expandRow from './TableExpand'
 
   export default {
     name: "Detail",
