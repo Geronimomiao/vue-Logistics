@@ -15,12 +15,10 @@
         </div>
         <div class="table">
           <Table border :columns="columns" :data="data">
-
             <template slot-scope="{ row }" slot="order_id">
               <strong @click="goForDetail(row.order_id)">{{ row.order_id }}</strong>
             </template>
           </Table>
-
         </div>
       </div>
     </div>
@@ -29,6 +27,7 @@
 
 <script>
   import BScroll from 'better-scroll'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'ShowData',
@@ -58,24 +57,27 @@
     mounted() {
       this.content()
     },
+    computed: {
+      ...mapState(['username'])
+    },
     filters: {
       dateFilter(value) {
         if (value) {
           value.forEach(item => {
-            let pre_date = item.date.split(' ')[0].split('-')
-            let year = pre_date[0]
+            let pre_date = item.date[0].split(' ')[0].split('-')
             let mon = pre_date[1]
             let day = pre_date[2]
             // let date = `${year}-${mon}-${day}`
             let date = `${mon}-${day}`
             item.date = date
+            item.order_id = item._id
+            item.status = item.status[0]
           })
         }
         return value
       },
       timeFilter(value, arg) {
         let arr = []
-        console.log(arg)
         value.forEach(item => {
           console.log(item.date)
           if (item.date == arg) {
@@ -86,36 +88,19 @@
       }
     },
     methods: {
-      del() {
-        this.axios.post('/api/show/del').then(res => {
-          console.log(res)
-        })
-      },
       content() {
         let scroll = new BScroll(this.$refs.content, {
           click: true,
           scrollY: true,
         })
       },
-      handleSuccess(res) {
-        console.log(res)
-      },
       async showData() {
-        if (this.order_id) {
-          let params = {
-            order_id: this.order_id
-          }
-          await this.axios.post('/api/show/dataDetail', params).then(res => {
-            let news_filter = this.$options.filters['dateFilter']
-            this.data = news_filter([res.data.msg])
-          })
-        } else {
-          await this.axios.post('/api/show/data').then(res => {
-            let news_filter = this.$options.filters['dateFilter']
-            this.data = news_filter(res.data.msg)
-            console.log(this.data)
-          })
-        }
+        let param = { contact: this.username }
+        await this.axios.post('/api/show/data', param).then(res => {
+          let news_filter = this.$options.filters['dateFilter']
+          this.data = news_filter(res.data.msg)
+          console.log(this.data)
+        })
       },
       async timeData() {
         await this.axios.post('/api/show/data').then(res => {
@@ -123,23 +108,12 @@
           this.data = news_filter(res.data.msg)
 
           let time_filter = this.$options.filters['timeFilter']
-          let d =  new Date(this.date)
+          let d = new Date(this.date)
           let arg = (d.getMonth() + 1) + '-' + d.getDate()
           this.data = time_filter(this.data, arg)
         })
       },
-      show (index) {
-        this.$Modal.info({
-          title: '订单详情展示',
-          content: `
-            提单号：${this.data[index].order_id}<br>
-            船号/航次：${this.data[index].boat_name}<br>
-            状态：${this.data[index].status}<br>
-            目的港：${this.data[index].destination}<br>
-            集港日期：${this.data[index].port_time}<br>
-           `
-        })
-      },
+
       goForDetail(order_id) {
         console.log(order_id)
         this.$router.push({
@@ -184,6 +158,7 @@
 
       .table
         margin-top: 2vh
+
         .ivu-table-cell
           padding-left: 10px
           padding-right: 10px

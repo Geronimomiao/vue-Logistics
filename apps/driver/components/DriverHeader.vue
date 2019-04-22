@@ -17,10 +17,9 @@
   #driver_header
     background-color: #f0f0f0
     height: 7vh
-
-    .container
-      display: flex
-      justify-content space-between
-      align-items center
+    display: flex
+    font-size: 1.15rem
+    justify-content center
+    align-items center
 
 </style>

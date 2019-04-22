@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import BmapClient from '../../apps/driver/components/BmapClient'
-
 import Data from '../../apps/user/views/Data'
 import Detail from '../../apps/user/components/Detail'
 import ShowData from '../../apps/user/components/ShowData'
@@ -11,6 +9,13 @@ import Auth from '../../apps/user/components/Auth'
 
 import Admin from '../../apps/admin/views/Admin'
 import Index from '../../apps/admin/components/index'
+
+import Driver from '../../apps/driver/views/driver'
+import BmapClient from '../../apps/driver/components/BmapClient'
+import DriverClientOne from '../../apps/driver/components/DriverClientOne'
+import DriverClientTwo from '../../apps/driver/components/DriverClientTwo'
+import Login from '../../apps/driver/components/Login'
+
 
 Vue.use(Router)
 
@@ -60,9 +65,32 @@ export default new Router({
     },
 
     {
-      path: '/map_client',
-      name: 'BmapClient',
-      component: BmapClient
-    }
+      path: '/driver',
+      name: 'Driver',
+      component: Driver,
+      children: [
+        {
+          path: '/driver/index',
+          name: 'BmapClient',
+          component: BmapClient
+        },
+        {
+          path: '/driver/one',
+          name: 'DriverClientOne',
+          component: DriverClientOne
+        },
+        {
+          path: '/driver/two',
+          name: 'DriverClientTwo',
+          component: DriverClientTwo
+        },
+        {
+          path: '/driver/login',
+          name: 'Login',
+          component: Login
+        },
+      ]
+    },
+
   ]
 })

@@ -1,10 +1,8 @@
 <template>
   <div id="bmap_client">
-    <nav-header></nav-header>
-      <div class="func">
-        <Button type="primary" @click="getLocation">发送位置</Button>
-      </div>
-    <nav-footer></nav-footer>
+    <div class="func">
+      <Button type="primary" @click="getLocation">发送位置</Button>
+    </div>
   </div>
 </template>
 
@@ -16,6 +14,7 @@
     },
     mounted() {
       this.getLocation()
+      this.getDriverInfo()
     },
     methods: {
       getLocation() {
@@ -29,11 +28,15 @@
               ak: 'OGQnghxuwbYbqcTm3mzrEGQbGVMdv4id',
             }
           }).then(res => {
-            console.log(this.my_location)
             this.my_location = res.data.result[0]
+            console.log(res.data.result[0])
           })
         })
       },
+      getDriverInfo() {
+        let list_id = 40
+
+      }
     }
   }
 </script>

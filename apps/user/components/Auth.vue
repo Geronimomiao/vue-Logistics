@@ -46,7 +46,7 @@
           let data = res.data;
           if (data.status) {
             this.$store.commit('updateUserInfo', this.username)
-            this.$router.push({path: '/show'})
+            this.$router.push({path: '/data/show'})
           } else {
             this.error()
           }

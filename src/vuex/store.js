@@ -6,11 +6,15 @@ Vue.use(Vuex)
 export default () => {
   return new Vuex.Store({
     state: {
-      username: ''
+      username: '',
+      driver: {},
     },
     mutations: {
       updateUserInfo(state, username) {
         state.username = username
+      },
+      updateDriverInfo(state, dirver) {
+        state.dirver = dirver
       },
     }
   })
