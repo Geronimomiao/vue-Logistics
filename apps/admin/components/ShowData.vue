@@ -96,7 +96,7 @@
       },
       async showData() {
         let param = { contact: this.username }
-        await this.axios.post('/api/show/data', param).then(res => {
+        await this.axios.post('/api/admin/show/data', param).then(res => {
           let news_filter = this.$options.filters['dateFilter']
           this.data = news_filter(res.data.msg)
           console.log(this.data)
@@ -104,7 +104,7 @@
       },
       async timeData() {
         let param = { contact: this.username }
-        await this.axios.post('/api/show/data', param).then(res => {
+        await this.axios.post('/api/admin/show/data', param).then(res => {
           console.log(res.data)
           let news_filter = this.$options.filters['dateFilter']
           this.data = news_filter(res.data.msg)
@@ -120,11 +120,10 @@
         this.$store.commit('updateOrderId', order_id)
         console.log(order_id)
         this.$router.push({
-          name: 'Detail'
+          name: 'AdminDetail'
         })
       },
     },
-
   }
 </script>
 

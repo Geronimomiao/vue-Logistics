@@ -94,14 +94,25 @@
     mounted() {
       this.showData()
     },
+    filters: {
+      msgFilter(value) {
+        value.forEach(item => {
+          item._expanded = true
+        })
+        console.log(value)
+        return value
+      }
+    },
     methods: {
       showData() {
         let params = {
           order_id: this.order_id
         }
         this.axios.post('/api/show/orderDetail', params).then(res => {
+          let Filter = this.$options.filters['msgFilter']
+
           this.data = res.data.msg[0]
-          this.msg = res.data.msg
+          this.msg =  Filter(res.data.msg)
           this.content()
           console.log(this.msg)
         })

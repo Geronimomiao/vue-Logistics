@@ -25,4 +25,10 @@ export default {
       line-height: 1.3rem
     .ivu-modal-confirm-footer
       margin-top: 4px
+  .ivu-modal
+    .ivu-modal-body
+      img
+        max-width: 100%;
+        max-height: 100%;
+
 </style>

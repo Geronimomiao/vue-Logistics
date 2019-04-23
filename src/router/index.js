@@ -9,6 +9,11 @@ import Auth from '../../apps/user/components/Auth'
 
 import Admin from '../../apps/admin/views/Admin'
 import Index from '../../apps/admin/components/index'
+import AdminAuth from '../../apps/admin/components/Auth'
+import AdminDetail from '../../apps/admin/components/Detail'
+import AdminShowData from '../../apps/admin/components/ShowData'
+import AdminBmap from '../../apps/admin/components/Bmap'
+
 
 import Driver from '../../apps/driver/views/driver'
 import BmapClient from '../../apps/driver/components/BmapClient'
@@ -36,7 +41,6 @@ export default new Router({
           name: 'ShowData',
           component: ShowData,
           meta: {keepAlive: true},
-
         },
         {
           path: '/data/detail',
@@ -60,6 +64,27 @@ export default new Router({
           path: '/admin/index',
           name: 'Index',
           component: Index
+        },
+        {
+          path: '/admin/auth',
+          name: 'AdminAuth',
+          component: AdminAuth
+        },
+        {
+          path: '/admin/show',
+          name: 'AdminShowData',
+          component: AdminShowData,
+          meta: {keepAlive: true},
+        },
+        {
+          path: '/admin/detail',
+          name: 'AdminDetail',
+          component: AdminDetail,
+        },
+        {
+          path: '/admin/map',
+          name: 'AdminBmap',
+          component: AdminBmap
         },
       ]
     },
