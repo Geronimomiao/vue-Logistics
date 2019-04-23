@@ -9,7 +9,6 @@
         <span class="expand-key">提箱日期: </span>
         <span class="expand-value">{{ row.suitcase_time | dateFilter  }}</span>
       </Col>
-
     </Row>
 
     <Row>
@@ -35,8 +34,11 @@
       </Col>
     </Row>
     <Row>
-      <Col span="24">
+      <Col span="12">
         回箱位置：{{ row.recv_suitcase_location }}
+      </Col>
+      <Col span="12" class="location">
+        <div @click="goForMap(row.list_id)">箱子位置</div>
       </Col>
     </Row>
   </div>
@@ -61,10 +63,25 @@
         return date
       }
     },
+    methods: {
+      goForMap(list_id) {
+        let param = {list_id: list_id}
+        this.axios.post('/api/driver/getPosition', param).then(res => {
+          // console.log(res)
+          this.$router.push({
+            name: 'Bmap',
+            params: {
+              list_id: list_id
+            }
+          })
+        })
+      }
+    },
   }
 </script>
 
 <style lang="stylus">
-
-
+  #table_expand
+    .location
+      font-weight: 500
 </style>

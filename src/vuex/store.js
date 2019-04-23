@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default () => {
   return new Vuex.Store({
     state: {
+      order_id: '',
       username: '',
       driver: {},
     },
@@ -15,6 +16,9 @@ export default () => {
       },
       updateDriverInfo(state, dirver) {
         state.dirver = dirver
+      },
+      updateOrderId(state, order_id) {
+        state.order_id = order_id
       },
     }
   })

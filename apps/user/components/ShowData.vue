@@ -103,7 +103,8 @@
         })
       },
       async timeData() {
-        await this.axios.post('/api/show/data').then(res => {
+        let param = { contact: this.username }
+        await this.axios.post('/api/show/data', param).then(res => {
           let news_filter = this.$options.filters['dateFilter']
           this.data = news_filter(res.data.msg)
 
@@ -115,13 +116,8 @@
       },
 
       goForDetail(order_id) {
+        this.$store.commit('updateOrderId', order_id)
         console.log(order_id)
-        this.$router.push({
-          name: 'Detail',
-          params: {
-            order_id: order_id
-          }
-        })
       },
     },
 

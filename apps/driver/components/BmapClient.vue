@@ -14,7 +14,6 @@
     },
     mounted() {
       this.getLocation()
-      this.getDriverInfo()
     },
     methods: {
       getLocation() {
@@ -33,10 +32,6 @@
           })
         })
       },
-      getDriverInfo() {
-        let list_id = 40
-
-      }
     }
   }
 </script>

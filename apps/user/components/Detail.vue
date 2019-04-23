@@ -44,6 +44,7 @@
 <script>
   import BScroll from 'better-scroll'
   import expandRow from './TableExpand'
+  import {mapState} from 'vuex'
 
   export default {
     name: "Detail",
@@ -85,13 +86,16 @@
         ],
       }
     },
+    computed: {
+      ...mapState(['order_id'])
+    },
     mounted() {
       this.showData()
     },
     methods: {
       showData() {
         let params = {
-          order_id: this.$route.params.order_id
+          order_id: this.order_id
         }
         this.axios.post('/api/show/orderDetail', params).then(res => {
           this.data = res.data.msg[0]

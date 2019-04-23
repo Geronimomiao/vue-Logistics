@@ -25,10 +25,12 @@
           </div>
           <div class="func">
             <div class="func_item">
-              <Button type="primary" ghost @click="">拍照</Button>
+              <Button type="primary" ghost @click="getLocation">到场</Button>
             </div>
             <div class="func_item">
-              <Button type="primary" ghost @click="">上传</Button>
+              <a href="javascript:;" class="file">上传照片
+                <input type="file" accept="image/*" capture @change="tirggerFile($event)" placeholder="上传照片"></input>
+              </a>
             </div>
             <div class="func_item">
               <Button type="primary" ghost @click="">到场</Button>
@@ -62,10 +64,12 @@
           </div>
           <div class="func">
             <div class="func_item">
-              <Button type="primary" ghost @click="">拍照</Button>
+              <Button type="primary" ghost @click="getLocation">到场</Button>
             </div>
             <div class="func_item">
-              <Button type="primary" ghost @click="">上传</Button>
+              <a href="javascript:;" class="file">上传照片
+                <input type="file" accept="image/*" capture @change="tirggerFile($event)" placeholder="上传照片"></input>
+              </a>
             </div>
             <div class="func_item">
               <Button type="primary" ghost @click="">到场</Button>
@@ -142,5 +146,21 @@
           .func_item
             padding: 0.4rem
             flex 1
-
+            .file
+              position: relative;
+              display: inline-block;
+              border: 1px solid #2d8cf0;
+              border-radius: 4px;
+              padding: 4px 12px;
+              overflow: hidden;
+              color: #2d8cf0;
+              text-decoration: none;
+              text-indent: 0;
+              line-height: 20px;
+              input
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
 </style>
