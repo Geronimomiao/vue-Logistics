@@ -112,7 +112,7 @@
           let Filter = this.$options.filters['msgFilter']
 
           this.data = res.data.msg[0]
-          this.msg =  Filter(res.data.msg)
+          this.msg = Filter(res.data.msg)
           this.content()
           console.log(this.msg)
         })

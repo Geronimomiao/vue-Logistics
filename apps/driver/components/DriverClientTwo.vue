@@ -1,7 +1,11 @@
 <template>
   <div id="driver_client_two">
-    <driver-client-one></driver-client-one>
-    <driver-client-one></driver-client-one>
+    <div class="container">
+      <driver-client-one></driver-client-one>
+    </div>
+    <div class="container">
+      <driver-client-one></driver-client-one>
+    </div>
   </div>
 </template>
 
@@ -20,5 +24,11 @@
 </script>
 
 <style lang="stylus">
+
+  #driver_client_two
+    .container
+      height 41vh
+      overflow hidden
+
 
 </style>

@@ -2,7 +2,8 @@
   <div id="b_map">
     <baidu-map class="bm-view" :center="center" :zoom="zoom">
       <bm-marker v-if="position" :position='formatPosition(position.x, position.y)'
-                 :icon="{url: 'http://wsmpage.cn/e-charge/e-charge.png', size: {width: 20, height: 20}}">
+                 :icon="{url: 'http://wsmpage.cn/logistics/logo.gif',
+                          size: {width: 60, height: 40}}">
       </bm-marker>
     </baidu-map>
   </div>
@@ -35,7 +36,7 @@
           list_id: this.$route.params.list_id
         }
         this.axios.post('/api/driver/getPosition', param).then(res => {
-          // console.log(res.data.position)
+          console.log(res.data.position)
           this.position = res.data.position
         })
       },
