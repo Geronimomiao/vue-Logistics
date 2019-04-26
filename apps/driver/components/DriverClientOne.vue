@@ -7,7 +7,7 @@
             <Input type="text" v-model="list_id" placeholder="请输入序号"></Input>
           </Col>
           <Col span="4" offset="2">
-            <Button type="success" ghost @click="getInfo">提交</Button>
+            <Button type="success" ghost @click="getInfo();getLocation()">提交</Button>
           </Col>
         </Row>
         <div v-if="info">
@@ -43,7 +43,7 @@
           </div>
           <div class="func">
             <div class="func_item">
-              <Button type="primary" ghost @click="getLocation">到场</Button>
+              <Button type="primary" ghost @click="getLocation();changeStatus()">到场</Button>
             </div>
           </div>
           <div class="msg">
@@ -102,6 +102,7 @@
         })
       },
       getLocation() {
+        console.log('获取位置信息')
         navigator.geolocation.getCurrentPosition((p) => {
           // console.log(p.coords)
           this.axios.get('/baidu/geoconv/v1/', {
@@ -113,30 +114,31 @@
             }
           }).then(res => {
             // this.my_location = res.data.result[0]
-            let param_1 = {
+            let param = {
               position: res.data.result[0],
               list_id: this.list_id
             }
-            this.axios.post('/api/driver/setPosition', param_1).then(res => {
-              if (res.status == 200) {
-                this.$Notice.open({
-                  title: '通知',
-                  desc: `
+            this.axios.post('/api/driver/setPosition', param)
+          })
+        })
+      },
+      changeStatus() {
+        let param_2 = {
+          status: '到场',
+          list_id: this.list_id,
+        }
+        this.axios.post('/api/show/update/status', param_2).then(res => {
+          console.log(res)
+          if (res.status == 200) {
+            this.$Notice.open({
+              title: '通知',
+              desc: `
                     提交成功\n
                     请您耐心等待\n
                     如果有问题 请联系此单的操作人员
                   `
-                });
-              }
-            })
-            let param_2 = {
-              status: '到场',
-              list_id: this.list_id,
-            }
-            this.axios.post('/api/show/update/status', param_2).then(res => {
-              console.log(res)
-            })
-          })
+            });
+          }
         })
       },
       getSealToken() {

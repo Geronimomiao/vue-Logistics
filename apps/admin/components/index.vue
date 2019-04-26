@@ -9,7 +9,7 @@
       <Upload action="/api/upload/data"
               :show-upload-list="false"
               :on-success="handleSuccess">
-        <Button icon="ios-cloud-upload-outline">上传文件(跟新)</Button>
+        <Button icon="ios-cloud-upload-outline">上传文件(更新)</Button>
       </Upload>
       <Button type="error" ghost class="del" @click="del">清空所有数据</Button>
     </div>

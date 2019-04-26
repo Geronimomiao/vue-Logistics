@@ -11,7 +11,20 @@
           <Button type="primary" ghost @click="showData">查询</Button>
         </div>
         <div class="all">
-          <Button type="success" ghost @click="showData">全部订单</Button>
+          <Row>
+            <Col span="6">
+              <Button type="success" ghost @click="showData">全部订单</Button>
+            </Col>
+            <Col span="6">
+              <Button type="success" ghost @click="backTwoDays">前两日</Button>
+            </Col>
+            <Col span="6">
+              <Button type="success" ghost @click="today">今日</Button>
+            </Col>
+            <Col span="6">
+              <Button type="success" ghost @click="afterTwoDays">后两日</Button>
+            </Col>
+          </Row>
         </div>
         <div class="table">
           <Table border :columns="columns" :data="data">
@@ -123,6 +136,46 @@
           name: 'Detail'
         })
       },
+      today() {
+        let d = new Date()
+        let arg = (d.getMonth() + 1) + '-' + d.getDate()
+        this.findData(arg)
+      },
+      backTwoDays() {
+        let d = new Date()
+        let arg1 = (d.getMonth() + 1) + '-' + (d.getDate() - 1)
+        let arg2 = (d.getMonth() + 1) + '-' + (d.getDate() - 2)
+        this.findTwoData(arg1, arg2)
+      },
+      afterTwoDays() {
+        let d = new Date()
+        let arg1 = (d.getMonth() + 1) + '-' + (d.getDate() + 1)
+        let arg2 = (d.getMonth() + 1) + '-' + (d.getDate() + 2)
+        this.findTwoData(arg1, arg2)
+      },
+      findData(arg) {
+        let param = { contact: this.username }
+        this.axios.post('/api/show/data', param).then(res => {
+          // console.log(res.data)
+          let news_filter = this.$options.filters['dateFilter']
+          let pre_data = news_filter(res.data.msg)
+          let time_filter = this.$options.filters['timeFilter']
+          this.data = time_filter(pre_data, arg)
+          console.log(this.data)
+        })
+      },
+      findTwoData(arg1, arg2) {
+        let param = { contact: this.username }
+        this.axios.post('/api/show/data', param).then(res => {
+          console.log(res.data)
+          let news_filter = this.$options.filters['dateFilter']
+          this.data = news_filter(res.data.msg)
+          let time_filter = this.$options.filters['timeFilter']
+          let data_1 = time_filter(this.data, arg1)
+          let data_2 = time_filter(this.data, arg2)
+          this.data = data_1.concat(data_2)
+        })
+      },
     },
 
   }
@@ -153,8 +206,8 @@
 
       .all
         margin-top: 2vh
-        -ms-text-align-last: left
-        text-align-last: left
+        .ivu-col-span-6
+          text-align: center
 
       .table
         margin-top: 2vh
